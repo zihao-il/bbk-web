@@ -11,6 +11,7 @@ export default defineConfig({
         }), autoImport({
             resolvers: [VarletUIResolver({autoImport: true})]
         })],
+    base: '/',
     server: {
         host: '0.0.0.0',
         proxy: {
