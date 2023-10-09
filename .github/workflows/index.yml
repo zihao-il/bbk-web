@@ -28,5 +28,5 @@ jobs:
     - name: Package and upload Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: build-artifacts  
+        name: dist-actions
         path: "./dist"
