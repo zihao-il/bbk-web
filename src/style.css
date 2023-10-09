@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    transition: background-color .25s, color .25s;
+    color: var(--color-text);
+    background-color: var(--color-body);
+}
+
+#app {
+    overflow: hidden;
+
+}
+
+
+.var-back-top {
+    --back-top-bottom: 70px;
+
+}
+
+.var-link {
+    --link-font-size: 1em;
+}
+
+.card-R {
+    --card-subtitle-color: rgb(76, 175, 80);
+}
+
+.card-B {
+    --card-subtitle-color: rgba(255, 0, 0);
+}
+
+.var-card {
+    --card-footer-margin: 1em 0 0px 0;
+}
+
+.var-row {
+    margin-right: 0 !important;
+}
+
+
+

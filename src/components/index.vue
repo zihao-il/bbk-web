@@ -1,0 +1,384 @@
+<script setup>
+import {get_version, search_version} from "../api/index.js";
+import {onMounted, reactive, ref} from "vue";
+import {Snackbar} from "@varlet/ui";
+
+
+const mcList = reactive([]);
+const newMcList = reactive([]);
+const searchValue = ref('')
+let mSearch = ref(true)
+const loading = ref(false)
+const finished = ref(false)
+const isBeta = ref(0)
+let newCard = ref("")
+
+async function getMcData(d, b, s) {
+    let vData
+    if (s === true) {
+        const {data} = await search_version(d)
+        if (data.status === 201) {
+
+            return Snackbar.error("无此版本号！")
+        }
+        vData = data.message
+
+    } else {
+        const {data} = await get_version(d)
+        vData = data.message
+    }
+    const reversedItems = ref(vData.slice().reverse());
+    if (b === true) {
+        //重新刷新数据
+        mcList.splice(0, mcList.length, ...reversedItems.value)
+
+    } else {
+        //累加数据
+        mcList.push(...reversedItems.value);
+
+    }
+
+}
+
+const Init = () => {
+
+    switch (isBeta.value) {
+        case "全版本":
+        case 0:
+            sessionStorage.setItem('version', sessionStorage.getItem('Beta'));
+
+            break;
+        case "正式版":
+        case 1 :
+
+            sessionStorage.setItem('version', sessionStorage.getItem('Release'));
+
+            break;
+        case "测试版":
+        case 2 :
+            sessionStorage.setItem('version', sessionStorage.getItem('Beta'));
+
+            break;
+    }
+
+}
+
+async function getLastData() {
+    let vData
+
+    const {data} = await get_version({"v": "larversion"})
+    if (data.status === 201) {
+        return Snackbar.error("获取总版本号失败！")
+    } else {
+        vData = data.message
+        sessionStorage.setItem('isBeta', '');
+        sessionStorage.setItem('Release', vData[0].Release);
+        sessionStorage.setItem('Beta', vData[0].Beta);
+
+    }
+
+}
+
+
+async function getNewMcList() {
+    let d
+    if (isBeta.value === "全版本") {
+        d = {"v": "last"}
+    } else if (isBeta.value === "正式版") {
+        d = {"v": "last", "b": 0}
+    } else if (isBeta.value === "测试版") {
+        d = {"v": "last", "b": 1}
+    } else {
+        d = {"v": "last"}
+    }
+    const {data} = await get_version(d)
+    newMcList.splice(0, mcList.length, ...data.message)
+
+
+}
+
+onMounted(() => {
+    getLastData()
+    getNewMcList()
+    let intervalId = setInterval(function () {
+        let betaValue = sessionStorage.getItem('Beta');
+        if (betaValue !== null) {
+            clearInterval(intervalId);
+            getMcData({"v": betaValue});
+            sessionStorage.setItem('version', betaValue);
+        }
+    }, 100);
+    window.scrollTo(0, 0);
+});
+
+
+function mSwitch() {
+    mSearch.value = mSearch.value === false;
+}
+
+function searchInput() {
+    let m
+    let b
+    switch (isBeta.value) {
+        case "全版本":
+            b = '2'
+            break;
+        case "正式版":
+            b = '0'
+            break;
+        case "测试版":
+            b = '1'
+            break;
+    }
+    if (searchValue.value.split('.')[1]) {
+
+        if (mSearch.value === true) {
+            m = '1'
+        } else {
+            m = '0'
+        }
+
+        newCard.value = "new-card"
+        getMcData({"s": searchValue.value, "m": m, "b": b}, true, true)
+        loading.value = false
+        finished.value = true
+    } else {
+        newCard.value = ""
+        Init()
+        getMcData({"v": sessionStorage.getItem('version'), "b": b}, true, false)
+        loading.value = true
+        finished.value = false
+        load()
+    }
+
+
+}
+
+
+const setItem = (B, D) => {
+    sessionStorage.setItem('isBeta', B);
+    getMcData({"v": sessionStorage.getItem(D), "b": B}, true)
+    sessionStorage.setItem('version', sessionStorage.getItem(D));
+    getNewMcList()
+}
+
+function handleClick(isBeta) {
+    searchValue.value = ''
+    sessionStorage.setItem('version', sessionStorage.getItem('Beta'));
+    switch (isBeta) {
+        case "全版本":
+            setItem("", "Beta")
+            break;
+        case "正式版":
+            setItem("0", "Release")
+            break;
+        case "测试版":
+            setItem("1", "Beta")
+            break;
+    }
+
+}
+
+
+function load() {
+    setTimeout(() => {
+        let is_b = sessionStorage.getItem('isBeta');
+        let ver = sessionStorage.getItem('version');
+        if (ver === "1.2.x") {
+            loading.value = false
+            finished.value = true
+            return
+        }
+        let v = parseInt(ver.split('.')[1]) - 1;
+        v = `1.${v}.x`;
+        sessionStorage.setItem('version', v);
+        let d;
+        if (is_b === "") {
+            d = {"v": v}
+        } else {
+            d = {"v": v, "b": is_b}
+
+        }
+        getMcData(d)
+        loading.value = false
+    }, 1000)
+}
+
+
+</script>
+
+<template>
+
+    <var-tabs v-model:active="isBeta" @click="handleClick">
+        <var-tab name="全版本">全版本</var-tab>
+        <var-tab name="正式版">正式版</var-tab>
+        <var-tab name="测试版">测试版</var-tab>
+
+    </var-tabs>
+
+
+    <var-row justify="center">
+        <var-col :span="22">
+            <var-input variant="outlined" placeholder="请输入版本号" @input="searchInput" v-model="searchValue"/>
+            <var-checkbox @click="mSwitch" v-model="mSearch" class="mSwitch">模糊搜索</var-checkbox>
+        </var-col>
+
+        <var-list loading-text="正在努力输出中..."
+                  finished-text="一滴都没有了"
+                  error-text="出错了出错了"
+                  :finished="finished"
+                  offset="30"
+                  v-model:loading="loading"
+                  check
+                  @load="load">
+
+
+            <var-col :class="newCard" v-for="li in newMcList" :key="li.version_all">
+
+                <var-card
+                    :title=li.version
+                    :subtitle="li.is_beta===0 ? '最新正式版' : '最新测试版'"
+                    layout="column"
+                    ripple
+                    outline="outline"
+                    :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
+                >
+                    <template #description>
+                        <var-space>
+                            <ul>
+                                <li>更新日志：
+                                    <var-link type="primary" target="_blank"
+                                              :href="'https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88' + li.version"
+                                              underline="none">Minecraft Wiki
+                                    </var-link>
+                                </li>
+                            </ul>
+
+                        </var-space>
+
+                    </template>
+
+                    <template #extra>
+                        <var-space>
+                            <var-chip plain type="primary">
+                                <var-link type="primary" target="_blank"
+                                          :disabled="li.ARMv7===null ||  li.ARMv7 === '' ? true: null" :href="li.ARMv7"
+                                          underline="none">ARMv7
+                                    <var-icon name="download"/>
+                                </var-link>
+                            </var-chip>
+
+                            <var-chip plain type="primary">
+                                <var-link type="primary" :disabled="li.ARMv8===null ||  li.ARMv8 === '' ? true: null"
+                                          target="_blank"
+                                          :href="li.ARMv8" underline="none">ARMv8
+                                    <var-icon name="download"/>
+                                </var-link>
+                            </var-chip>
+
+                        </var-space>
+                    </template>
+                </var-card>
+
+
+            </var-col>
+            <var-col v-for="li in mcList" :key="li.version_all">
+                <var-card
+                    :title=li.version
+                    :subtitle="li.is_beta===0 ? '正式版' : '测试版'"
+                    layout="column"
+                    ripple
+                    outline="outline"
+                    :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
+                >
+                    <template #description>
+                        <var-space>
+                            <ul>
+                                <li>更新日志：
+                                    <var-link type="primary" target="_blank"
+                                              :href="'https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88' + li.version"
+                                              underline="none">Minecraft Wiki
+                                    </var-link>
+                                </li>
+                            </ul>
+
+                        </var-space>
+
+                    </template>
+
+                    <template #extra>
+                        <var-space>
+                            <var-chip plain type="primary">
+                                <var-link type="primary" target="_blank"
+                                          :disabled="li.ARMv7===null ||  li.ARMv7 === '' ? true: null" :href="li.ARMv7"
+                                          underline="none">ARMv7
+                                    <var-icon name="download"/>
+                                </var-link>
+                            </var-chip>
+
+                            <var-chip plain type="primary">
+                                <var-link type="primary" :disabled="li.ARMv8===null ||  li.ARMv8 === '' ? true: null"
+                                          target="_blank"
+                                          :href="li.ARMv8" underline="none">ARMv8
+                                    <var-icon name="download"/>
+                                </var-link>
+                            </var-chip>
+
+                        </var-space>
+                    </template>
+                </var-card>
+            </var-col>
+        </var-list>
+        <var-col justify="center">
+            <div>
+                by：
+                <var-link type="primary" href="https://github.com/zihao-il" target="_blank"
+                          underline="none">zihao_il
+                </var-link>
+            </div>
+        </var-col>
+        <var-back-top :duration="300"/>
+    </var-row>
+
+</template>
+
+<style scoped>
+.var-input {
+    width: 100%;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+}
+
+.var-card {
+    margin-bottom: 1.25em;
+}
+
+.var-row {
+    padding-bottom: 50px;
+}
+
+
+.var-list {
+    width: 92%;
+
+    min-height: 100vh;
+}
+
+
+ul {
+    margin-left: 2em;
+    margin-top: 0.75em;
+    list-style-type: disc;
+
+}
+
+.mSwitch {
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
+.new-card {
+    display: none !important;
+}
+
+</style>
