@@ -34,6 +34,9 @@ nginx配置简单举例
         ...
 
 ```
+## 参考页面
+
+[https://bbk.endyun.ltd/download](https://bbk.endyun.ltd/download)
 
 ## 其他说明
 
