@@ -18,7 +18,6 @@ async function getMcData(d, b, s) {
     if (s === true) {
         const {data} = await search_version(d)
         if (data.status === 201) {
-
             return Snackbar.error("无此版本号！")
         }
         vData = data.message
@@ -130,18 +129,20 @@ function searchInput() {
             b = '1'
             break;
     }
-    if (searchValue.value.split('.')[1]) {
+    if (searchValue.value !== "") {
+        if (searchValue.value.split('.')[1]) {
 
-        if (mSearch.value === true) {
-            m = '1'
-        } else {
-            m = '0'
+            if (mSearch.value === true) {
+                m = '1'
+            } else {
+                m = '0'
+            }
+
+            newCard.value = "new-card"
+            getMcData({"s": searchValue.value, "m": m, "b": b}, true, true)
+            loading.value = false
+            finished.value = true
         }
-
-        newCard.value = "new-card"
-        getMcData({"s": searchValue.value, "m": m, "b": b}, true, true)
-        loading.value = false
-        finished.value = true
     } else {
         newCard.value = ""
         Init()
