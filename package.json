@@ -1,7 +1,7 @@
 {
   "name": "bbk-web",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "zihao_il",
   "bugs": "https://github.com/zihao-il/bbk-web/issues",
   "type": "module",

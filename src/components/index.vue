@@ -205,6 +205,15 @@ function load() {
     }, 1000)
 }
 
+const generateLink = (version) => {
+    const versionParts = version.split('.');
+    let ver = `${versionParts[0]}.${versionParts[1]}`
+    if (parseFloat(ver) > 1.1) {
+        return `https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88${version}`;
+    } else {
+        return `https://minecraft.fandom.com/zh/wiki/%E6%90%BA%E5%B8%A6%E7%89%88${version}`;
+    }
+};
 
 </script>
 
@@ -249,7 +258,7 @@ function load() {
                             <ul>
                                 <li>更新日志：
                                     <var-link type="primary" target="_blank"
-                                              :href="'https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88' + li.version"
+                                              v-bind:href="generateLink(li.version)"
                                               underline="none">Minecraft Wiki
                                     </var-link>
                                 </li>

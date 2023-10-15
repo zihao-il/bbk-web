@@ -53,7 +53,7 @@ function toggleTheme() {
             <br>
             by：zihao_il
             <br>
-            版本：1.1
+            版本：1.2
         </div>
     </var-overlay>
 </template>
