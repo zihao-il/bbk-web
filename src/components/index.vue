@@ -12,6 +12,7 @@ const loading = ref(false)
 const finished = ref(false)
 const isBeta = ref(0)
 let newCard = ref("")
+let errorPop = ref(false)
 
 async function getMcData(d, b, s) {
     let vData
@@ -23,8 +24,16 @@ async function getMcData(d, b, s) {
         vData = data.message
 
     } else {
-        const {data} = await get_version(d)
-        vData = data.message
+
+        try {
+            const {data} = await get_version(d)
+            vData = data.message
+        } catch (e) {
+            errorPop.value = true
+            loading.value = false
+            finished.value = true
+            return
+        }
     }
     const reversedItems = ref(vData.slice().reverse());
     if (b === true) {
@@ -349,7 +358,22 @@ const generateLink = (version) => {
         </var-col>
         <var-back-top :duration="300"/>
     </var-row>
+    <var-popup :default-style="false" v-model:show="errorPop">
+        <var-result class="result" type="empty" title="无法获取版本列表">
+            <template #description>
+                <p>请联系管理员修复！</p>
+            </template>
+            <template #footer>
+                <var-button
+                    color="var(--result-empty-color)"
+                    text-color="#fff"
+                    @click="errorPop = false">
+                    知道了
+                </var-button>
 
+            </template>
+        </var-result>
+    </var-popup>
 </template>
 
 <style scoped>
