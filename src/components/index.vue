@@ -13,6 +13,7 @@ const finished = ref(false)
 const isBeta = ref(0)
 let newCard = ref("")
 let errorPop = ref(false)
+const skeletonLoading = ref(true)
 
 async function getMcData(d, b, s) {
     let vData
@@ -82,6 +83,7 @@ async function getLastData() {
         sessionStorage.setItem('isBeta', '');
         sessionStorage.setItem('Release', vData[0].Release);
         sessionStorage.setItem('Beta', vData[0].Beta);
+        skeletonLoading.value = false
 
     }
 
@@ -251,102 +253,113 @@ const generateLink = (version) => {
                   check
                   @load="load">
 
+            <var-skeleton
+                title
+                card
+                :rows="3"
+                :loading="skeletonLoading"
+            >
+                <var-col :class="newCard" v-for="li in newMcList" :key="li.version_all">
 
-            <var-col :class="newCard" v-for="li in newMcList" :key="li.version_all">
+                    <var-card
+                        :title=li.version
+                        :subtitle="li.is_beta===0 ? '最新正式版' : '最新测试版'"
+                        layout="column"
+                        ripple
+                        outline="outline"
+                        :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
+                    >
+                        <template #description>
+                            <var-space>
+                                <ul>
+                                    <li>更新日志：
+                                        <var-link type="primary" target="_blank"
+                                                  v-bind:href="generateLink(li.version)"
+                                                  underline="none">Minecraft Wiki
+                                        </var-link>
+                                    </li>
+                                </ul>
 
-                <var-card
-                    :title=li.version
-                    :subtitle="li.is_beta===0 ? '最新正式版' : '最新测试版'"
-                    layout="column"
-                    ripple
-                    outline="outline"
-                    :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
-                >
-                    <template #description>
-                        <var-space>
-                            <ul>
-                                <li>更新日志：
+                            </var-space>
+
+                        </template>
+
+                        <template #extra>
+                            <var-space>
+                                <var-chip plain type="primary">
                                     <var-link type="primary" target="_blank"
-                                              v-bind:href="generateLink(li.version)"
-                                              underline="none">Minecraft Wiki
+                                              :disabled="li.ARMv7===null ||  li.ARMv7 === '' ? true: null"
+                                              :href="li.ARMv7"
+                                              underline="none">ARMv7
+                                        <var-icon name="download"/>
                                     </var-link>
-                                </li>
-                            </ul>
+                                </var-chip>
 
-                        </var-space>
+                                <var-chip plain type="primary">
+                                    <var-link type="primary"
+                                              :disabled="li.ARMv8===null ||  li.ARMv8 === '' ? true: null"
+                                              target="_blank"
+                                              :href="li.ARMv8" underline="none">ARMv8
+                                        <var-icon name="download"/>
+                                    </var-link>
+                                </var-chip>
 
-                    </template>
-
-                    <template #extra>
-                        <var-space>
-                            <var-chip plain type="primary">
-                                <var-link type="primary" target="_blank"
-                                          :disabled="li.ARMv7===null ||  li.ARMv7 === '' ? true: null" :href="li.ARMv7"
-                                          underline="none">ARMv7
-                                    <var-icon name="download"/>
-                                </var-link>
-                            </var-chip>
-
-                            <var-chip plain type="primary">
-                                <var-link type="primary" :disabled="li.ARMv8===null ||  li.ARMv8 === '' ? true: null"
-                                          target="_blank"
-                                          :href="li.ARMv8" underline="none">ARMv8
-                                    <var-icon name="download"/>
-                                </var-link>
-                            </var-chip>
-
-                        </var-space>
-                    </template>
-                </var-card>
+                            </var-space>
+                        </template>
+                    </var-card>
 
 
-            </var-col>
-            <var-col v-for="li in mcList" :key="li.version_all">
-                <var-card
-                    :title=li.version
-                    :subtitle="li.is_beta===0 ? '正式版' : '测试版'"
-                    layout="column"
-                    ripple
-                    outline="outline"
-                    :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
-                >
-                    <template #description>
-                        <var-space>
-                            <ul>
-                                <li>更新日志：
+                </var-col>
+                <var-col v-for="li in mcList" :key="li.version_all">
+                    <var-card
+                        :title=li.version
+                        :subtitle="li.is_beta===0 ? '正式版' : '测试版'"
+                        layout="column"
+                        ripple
+                        outline="outline"
+                        :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
+                    >
+                        <template #description>
+                            <var-space>
+                                <ul>
+                                    <li>更新日志：
+                                        <var-link type="primary" target="_blank"
+                                                  :href="'https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88' + li.version"
+                                                  underline="none">Minecraft Wiki
+                                        </var-link>
+                                    </li>
+                                </ul>
+
+                            </var-space>
+
+                        </template>
+
+                        <template #extra>
+                            <var-space>
+                                <var-chip plain type="primary">
                                     <var-link type="primary" target="_blank"
-                                              :href="'https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88' + li.version"
-                                              underline="none">Minecraft Wiki
+                                              :disabled="li.ARMv7===null ||  li.ARMv7 === '' ? true: null"
+                                              :href="li.ARMv7"
+                                              underline="none">ARMv7
+                                        <var-icon name="download"/>
                                     </var-link>
-                                </li>
-                            </ul>
+                                </var-chip>
 
-                        </var-space>
+                                <var-chip plain type="primary">
+                                    <var-link type="primary"
+                                              :disabled="li.ARMv8===null ||  li.ARMv8 === '' ? true: null"
+                                              target="_blank"
+                                              :href="li.ARMv8" underline="none">ARMv8
+                                        <var-icon name="download"/>
+                                    </var-link>
+                                </var-chip>
 
-                    </template>
+                            </var-space>
+                        </template>
+                    </var-card>
+                </var-col>
+            </var-skeleton>
 
-                    <template #extra>
-                        <var-space>
-                            <var-chip plain type="primary">
-                                <var-link type="primary" target="_blank"
-                                          :disabled="li.ARMv7===null ||  li.ARMv7 === '' ? true: null" :href="li.ARMv7"
-                                          underline="none">ARMv7
-                                    <var-icon name="download"/>
-                                </var-link>
-                            </var-chip>
-
-                            <var-chip plain type="primary">
-                                <var-link type="primary" :disabled="li.ARMv8===null ||  li.ARMv8 === '' ? true: null"
-                                          target="_blank"
-                                          :href="li.ARMv8" underline="none">ARMv8
-                                    <var-icon name="download"/>
-                                </var-link>
-                            </var-chip>
-
-                        </var-space>
-                    </template>
-                </var-card>
-            </var-col>
         </var-list>
         <var-col justify="center">
             <div>

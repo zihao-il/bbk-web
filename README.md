@@ -31,6 +31,9 @@ npm run preview
 nginx配置简单举例
 
 ```bash
+    ...
+    
+    gzip  on;
     server {
         listen       80;
         server_name  localhost;
