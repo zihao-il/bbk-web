@@ -12,6 +12,10 @@ function toggleTheme() {
     darkMode.value = !darkMode.value;
     StyleProvider(currentTheme)
 }
+
+const openMC = () => {
+    window.location.href = "minecraft://";
+}
 </script>
 
 <template>
@@ -48,12 +52,21 @@ function toggleTheme() {
         <div class="overlay-content" @click.stop>
             开源地址：
             <var-link type="primary" href="https://github.com/zihao-il/bbk-web" target="_blank"
-                      underline="none">github
+                      underline="none">GitHub
             </var-link>
             <br>
             by：zihao_il
             <br>
-            版本：1.3
+            版本：1.5
+            <var-button
+                class="fixed-button"
+                round
+                block
+                type="primary"
+                @click="openMC"
+            >
+                MC启动！
+            </var-button>
         </div>
     </var-overlay>
 </template>
@@ -69,5 +82,11 @@ function toggleTheme() {
     position: sticky;
     top: 0;
     z-index: 99;
+}
+
+.fixed-button {
+    border-radius: 10px;
+    font-size: 0.8em;
+    padding: 0.5em 0.5em;
 }
 </style>
