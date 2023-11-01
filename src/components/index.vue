@@ -1,7 +1,7 @@
 <script setup>
 import {get_version, search_version} from "../api/index.js";
 import {onMounted, reactive, ref} from "vue";
-import {Snackbar} from "@varlet/ui";
+import {ActionSheet, Snackbar} from "@varlet/ui";
 
 
 const mcList = reactive([]);
@@ -226,6 +226,38 @@ const generateLink = (version) => {
     }
 };
 
+
+async function createSheet(li, vv) {
+    const d = JSON.parse(li.link)
+    const keys = Object.keys(d);
+    const transformedKeys = keys.map(key => {
+        return {
+            name: key,
+            icon: 'download'
+        };
+    });
+
+    const action = await ActionSheet({
+        actions: transformedKeys,
+        title: '下载推荐(OneDrive_365>OneDrive_E5>123盘)'
+    })
+
+    if (action !== 'close') {
+
+        if (vv === 'v7') {
+            window.open(d[action.name].ARMv7, '_blank');
+        } else {
+            if (d[action.name].ARMv8 === '') {
+                Snackbar.warning(`此版本没有ARMv8架构的安装包(>≈1.16.X版本才有)`)
+            } else {
+                window.open(d[action.name].ARMv8, '_blank');
+            }
+
+        }
+    }
+
+}
+
 </script>
 
 <template>
@@ -286,22 +318,19 @@ const generateLink = (version) => {
 
                         <template #extra>
                             <var-space>
-                                <var-chip plain type="primary">
-                                    <var-link type="primary" target="_blank"
-                                              :disabled="li.ARMv7===null ||  li.ARMv7 === '' ? true: null"
-                                              :href="li.ARMv7"
-                                              underline="none">ARMv7
+                                <var-chip plain @click="createSheet(li,'v7')" type="primary">
+                                    ARMv7
+                                    <template #right>
                                         <var-icon name="download"/>
-                                    </var-link>
+                                    </template>
+
                                 </var-chip>
 
-                                <var-chip plain type="primary">
-                                    <var-link type="primary"
-                                              :disabled="li.ARMv8===null ||  li.ARMv8 === '' ? true: null"
-                                              target="_blank"
-                                              :href="li.ARMv8" underline="none">ARMv8
+                                <var-chip plain @click="createSheet(li,'v8')" type="primary">
+                                    ARMv8
+                                    <template #right>
                                         <var-icon name="download"/>
-                                    </var-link>
+                                    </template>
                                 </var-chip>
 
                             </var-space>
@@ -336,22 +365,19 @@ const generateLink = (version) => {
 
                         <template #extra>
                             <var-space>
-                                <var-chip plain type="primary">
-                                    <var-link type="primary" target="_blank"
-                                              :disabled="li.ARMv7===null ||  li.ARMv7 === '' ? true: null"
-                                              :href="li.ARMv7"
-                                              underline="none">ARMv7
+                                <var-chip plain @click="createSheet(li,'v7')" type="primary">
+                                    ARMv7
+                                    <template #right>
                                         <var-icon name="download"/>
-                                    </var-link>
+                                    </template>
+
                                 </var-chip>
 
-                                <var-chip plain type="primary">
-                                    <var-link type="primary"
-                                              :disabled="li.ARMv8===null ||  li.ARMv8 === '' ? true: null"
-                                              target="_blank"
-                                              :href="li.ARMv8" underline="none">ARMv8
+                                <var-chip plain @click="createSheet(li,'v8')" type="primary">
+                                    ARMv8
+                                    <template #right>
                                         <var-icon name="download"/>
-                                    </var-link>
+                                    </template>
                                 </var-chip>
 
                             </var-space>
