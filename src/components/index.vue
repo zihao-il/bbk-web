@@ -230,6 +230,7 @@ const generateLink = (version) => {
 async function createSheet(li, vv) {
     const d = JSON.parse(li.link)
     const keys = Object.keys(d);
+    keys.reverse();
     const transformedKeys = keys.map(key => {
         return {
             name: key,
