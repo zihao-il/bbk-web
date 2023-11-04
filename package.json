@@ -13,15 +13,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@varlet/ui": "^2.17.1",
-    "axios": "^1.5.1",
+    "@varlet/ui": "^2.18.2",
+    "axios": "^1.6.0",
     "vite-plugin-compression": "^0.5.1",
     "vue": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.4.0",
-    "unplugin-auto-import": "^0.16.6",
+    "unplugin-auto-import": "^0.16.7",
     "unplugin-vue-components": "^0.25.2",
-    "vite": "^4.4.11"
+    "vite": "^4.5.0"
   }
 }
