@@ -14,6 +14,9 @@ const isBeta = ref(0)
 let newCard = ref("")
 let errorPop = ref(false)
 const skeletonLoading = ref(true)
+const show = ref(true)
+const NewRelease = ref('');
+const NewBeta = ref('');
 
 async function getMcData(d, b, s) {
     let vData
@@ -36,14 +39,13 @@ async function getMcData(d, b, s) {
             return
         }
     }
-    const reversedItems = ref(vData.slice().reverse());
     if (b === true) {
         //重新刷新数据
-        mcList.splice(0, mcList.length, ...reversedItems.value)
+        mcList.splice(0, mcList.length, ...vData)
 
     } else {
         //累加数据
-        mcList.push(...reversedItems.value);
+        mcList.push(...vData);
 
     }
 
@@ -72,6 +74,7 @@ const Init = () => {
 
 }
 
+
 async function getLastData() {
     let vData
 
@@ -91,18 +94,19 @@ async function getLastData() {
 
 
 async function getNewMcList() {
-    let d
-    if (isBeta.value === "全版本") {
-        d = {"v": "last"}
-    } else if (isBeta.value === "正式版") {
-        d = {"v": "last", "b": 0}
-    } else if (isBeta.value === "测试版") {
-        d = {"v": "last", "b": 1}
-    } else {
-        d = {"v": "last"}
-    }
-    const {data} = await get_version(d)
+
+    const {data} = await get_version({"v": "last"})
     newMcList.splice(0, mcList.length, ...data.message)
+    for (let li of newMcList) {
+        console.log(li)
+        if (li.is_beta === 0) {
+            NewRelease.value = `最新正式版：${li.version}\n`
+        } else {
+            NewBeta.value = `最新测试版：${li.version}\n`
+
+        }
+    }
+    // console.log(newMcList)
 
 
 }
@@ -171,7 +175,6 @@ const setItem = (B, D) => {
     sessionStorage.setItem('isBeta', B);
     getMcData({"v": sessionStorage.getItem(D), "b": B}, true)
     sessionStorage.setItem('version', sessionStorage.getItem(D));
-    getNewMcList()
 }
 
 function handleClick(isBeta) {
@@ -305,57 +308,7 @@ const convertUTCDateToLocalDate = (utcDateString) => {
                 :rows="3"
                 :loading="skeletonLoading"
             >
-                <var-col :class="newCard" v-for="li in newMcList" :key="li.version_all">
 
-                    <var-card
-                        :title=li.version
-                        :subtitle="li.is_beta===0 ? '最新正式版' : '最新测试版'"
-                        layout="column"
-                        ripple
-                        outline="outline"
-                        :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
-                    >
-                        <template #description>
-                            <var-space>
-                                <ul>
-                                    <li>更新日志：
-                                        <var-link type="primary" target="_blank"
-                                                  v-bind:href="generateLink(li.version)"
-                                                  underline="none">Minecraft Wiki
-                                        </var-link>
-                                    </li>
-                                    <li>
-                                        更新时间：{{ convertUTCDateToLocalDate(li.update_time) }}
-                                    </li>
-                                </ul>
-
-                            </var-space>
-
-                        </template>
-
-                        <template #extra>
-                            <var-space>
-                                <var-chip plain @click="createSheet(li,'v7')" type="primary">
-                                    ARMv7
-                                    <template #right>
-                                        <var-icon name="download"/>
-                                    </template>
-
-                                </var-chip>
-
-                                <var-chip plain @click="createSheet(li,'v8')" type="primary">
-                                    ARMv8
-                                    <template #right>
-                                        <var-icon name="download"/>
-                                    </template>
-                                </var-chip>
-
-                            </var-space>
-                        </template>
-                    </var-card>
-
-
-                </var-col>
                 <var-col v-for="li in mcList" :key="li.version_all">
                     <var-card
                         :title=li.version
@@ -370,7 +323,7 @@ const convertUTCDateToLocalDate = (utcDateString) => {
                                 <ul>
                                     <li>更新日志：
                                         <var-link type="primary" target="_blank"
-                                                  :href="'https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88' + li.version"
+                                                  v-bind:href="generateLink(li.version)"
                                                   underline="none">Minecraft Wiki
                                         </var-link>
                                     </li>
@@ -433,6 +386,29 @@ const convertUTCDateToLocalDate = (utcDateString) => {
             </template>
         </var-result>
     </var-popup>
+
+
+    <var-snackbar type="danger" v-model:show="show" :vertical="true">
+        <div>
+            <h3>有能力者请支持正版！</h3>
+            <p>本站所有的安装包仅供交流学习，禁止分享到任何平台，下载后请24小时内及时删除！</p>
+            <p>如需要游玩请前往 Minecraft官网 购买正版！！！</p>
+
+            <p>{{ NewRelease }}</p>
+            <p>{{ NewBeta }}</p>
+
+        </div>
+
+        <template #action>
+
+            <var-link type="primary" href="https://www.minecraft.net/">
+                <var-button type="primary" size="small">Minecraft官网</var-button>
+            </var-link>
+
+
+        </template>
+    </var-snackbar>
+
 </template>
 
 <style scoped>
