@@ -259,6 +259,19 @@ async function createSheet(li, vv) {
 
 }
 
+const convertUTCDateToLocalDate = (utcDateString) => {
+    if (utcDateString === null) {
+        return "未确定时间"
+    } else {
+        const date = new Date(utcDateString);
+        date.setDate(date.getDate() + 1);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+}
+
 </script>
 
 <template>
@@ -311,6 +324,9 @@ async function createSheet(li, vv) {
                                                   underline="none">Minecraft Wiki
                                         </var-link>
                                     </li>
+                                    <li>
+                                        更新时间：{{ convertUTCDateToLocalDate(li.update_time) }}
+                                    </li>
                                 </ul>
 
                             </var-space>
@@ -357,6 +373,9 @@ async function createSheet(li, vv) {
                                                   :href="'https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88' + li.version"
                                                   underline="none">Minecraft Wiki
                                         </var-link>
+                                    </li>
+                                    <li>
+                                        更新时间：{{ convertUTCDateToLocalDate(li.update_time) }}
                                     </li>
                                 </ul>
 
