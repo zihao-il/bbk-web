@@ -223,9 +223,9 @@ const generateLink = (version) => {
     const versionParts = version.split('.');
     let ver = `${versionParts[0]}.${versionParts[1]}`
     if (parseFloat(ver) > 1.1) {
-        return `https://minecraft.fandom.com/zh/wiki/%E5%9F%BA%E5%B2%A9%E7%89%88${version}`;
+        return `https://zh.minecraft.wiki/w/%E5%9F%BA%E5%B2%A9%E7%89%88${version}`;
     } else {
-        return `https://minecraft.fandom.com/zh/wiki/%E6%90%BA%E5%B8%A6%E7%89%88${version}`;
+        return `https://zh.minecraft.wiki/w/%E6%90%BA%E5%B8%A6%E7%89%88${version}`;
     }
 };
 
@@ -330,8 +330,10 @@ const convertUTCDateToLocalDate = (utcDateString) => {
                                     <li>
                                         更新时间：{{ convertUTCDateToLocalDate(li.update_time) }}
                                     </li>
+                                    <li>
+                                        文件大小：{{ li.file_size }}
+                                    </li>
                                 </ul>
-
                             </var-space>
 
                         </template>
