@@ -1,6 +1,6 @@
 import {createApp} from 'vue'
-import './style.css'
 import App from './App.vue'
 import '@varlet/ui/es/style'
+import './style.css'
 
 createApp(App).mount('#zihao_il')

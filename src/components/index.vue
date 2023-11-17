@@ -267,7 +267,6 @@ const convertUTCDateToLocalDate = (utcDateString) => {
         return "未确定时间"
     } else {
         const date = new Date(utcDateString);
-        date.setDate(date.getDate() + 1);
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
@@ -452,4 +451,7 @@ ul {
     display: none !important;
 }
 
+.b-radius {
+    border-radius: 10px;
+}
 </style>
