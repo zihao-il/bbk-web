@@ -2,7 +2,7 @@
 
 ## 说明
 
-如需要静态版请切换到 [alpha](#alpha) 分支
+如需要静态版请切换到 [alpha](https://github.com/zihao-il/bbk-web/tree/alpha) 分支
 
 ## 构建方法
 
