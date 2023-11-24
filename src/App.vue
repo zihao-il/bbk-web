@@ -57,7 +57,7 @@ const openMC = () => {
             <br>
             by：zihao_il
             <br>
-            版本：1.11
+            版本：1.12
             <var-button
                 class="fixed-button"
                 round

@@ -98,7 +98,6 @@ async function getNewMcList() {
     const {data} = await get_version({"v": "last"})
     newMcList.splice(0, mcList.length, ...data.message)
     for (let li of newMcList) {
-        console.log(li)
         if (li.is_beta === 0) {
             NewRelease.value = `最新正式版：${li.version}\n`
         } else {
