@@ -1,5 +1,9 @@
 # bbk-web
 
+## 说明
+
+如需要静态版请切换到 [alpha](#alpha) 分支
+
 ## 构建方法
 
 你需要安装[nodejs](https://nodejs.org/)
