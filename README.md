@@ -2,7 +2,7 @@
 
 ## 说明
 
-如需要静态版请切换到 [alpha](https://github.com/zihao-il/bbk-web/tree/alpha) 分支
+如需要静态版请把`src/utils/request.js`中`baseURL`取消注释再进行打包或者下载`dist-static.zip`文件
 
 ## 构建方法
 
@@ -32,7 +32,7 @@ npm run dev
 npm run preview
 ```
 
-nginx配置简单举例
+nginx反向代理简单举例（静态版不需要）
 
 ```bash
     ...

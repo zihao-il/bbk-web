@@ -20,7 +20,7 @@ export default defineConfig({
         proxy: {
             "/api": {
                 target: 'http://bbk.endyun.ltd:9000/',
-
+                changeOrigin: true,
             },
         }
 
