@@ -50,14 +50,14 @@ const openMC = () => {
 
     <var-overlay v-model:show="show">
         <div class="overlay-content" @click.stop>
-            开源地址：
-            <var-link type="primary" href="https://github.com/zihao-il/bbk-web" target="_blank"
-                      underline="none">GitHub
-            </var-link>
-            <br>
-            by：zihao_il
-            <br>
-            版本：1.12
+            <p>
+                开源地址：
+                <var-link type="primary" href="https://github.com/zihao-il/bbk-web" target="_blank"
+                          underline="none">GitHub
+                </var-link>
+            </p>
+            <p>by：zihao_il</p>
+            <p>版本：1.13</p>
             <var-button
                 class="fixed-button"
                 round
