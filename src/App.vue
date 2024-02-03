@@ -6,6 +6,7 @@ import {onBeforeMount, ref} from 'vue';
 let currentTheme = null
 const darkMode = ref(false);
 const show = ref(false)
+const colorValue = ref(null)
 
 function toggleTheme() {
     currentTheme = currentTheme ? null : Themes.dark
@@ -72,11 +73,21 @@ const openMC = () => {
                 </var-link>
             </p>
             <p>by：zihao_il</p>
-            <p>版本：1.13</p>
+            <p>版本：1.14</p>
             <div class="set-color">
             <span v-for="c in ['#3A7AFE','#A5E68A','#E67A7A','#FBD3BB','#D8B6EB','#F9C0C9','#A2D4E6']">
             <var-chip :round="false" :color='c' @click="setTheme(c)"></var-chip>
             </span>
+            </div>
+            <div class="diy-color">
+                <var-input placeholder="自定义颜色"
+                           :rules="[(v) => /^#[a-fA-F0-9]{6}$/.test(v)  || '格式错误！例如：#000000']"
+                           v-model="colorValue">
+                    <template #append-icon>
+                        <var-chip :round="false" :color='colorValue' @click="setTheme(colorValue)"></var-chip>
+
+                    </template>
+                </var-input>
             </div>
             <var-button
                 class="fixed-button"
@@ -117,4 +128,8 @@ const openMC = () => {
 
 }
 
+.diy-color {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
 </style>
