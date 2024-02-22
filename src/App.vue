@@ -3,16 +3,13 @@ import Index from './components/index.vue'
 import {StyleProvider, Themes} from '@varlet/ui'
 import {onBeforeMount, ref} from 'vue';
 
-let currentTheme = null
-const darkMode = ref(false);
+
 const show = ref(false)
 const colorValue = ref(null)
-
-function toggleTheme() {
-    currentTheme = currentTheme ? null : Themes.dark
-    darkMode.value = !darkMode.value;
-    StyleProvider(currentTheme)
-}
+const md2Color = ref('');
+const md2DColor = ref('');
+const md3Color = ref('');
+const md3DColor = ref('');
 
 const setTheme = (color) => {
     window.localStorage.setItem("ThemeColor", color)
@@ -22,16 +19,57 @@ const setTheme = (color) => {
 }
 
 
-onBeforeMount(() => {
-    let themeColor = window.localStorage.getItem("ThemeColor")
-    if (themeColor) {
-        setTheme(themeColor)
+const setThemeMod = () => {
+    let themeMod = window.localStorage.getItem("ThemeMod")
+    if (themeMod) {
+        ThemeMod(themeMod, false)
     }
+}
 
+const setThemeColor = () => {
+    let ThemeColor = window.localStorage.getItem("ThemeColor")
+    if (ThemeColor) {
+        setTheme(ThemeColor)
+    }
+}
+
+
+onBeforeMount(() => {
+    setThemeMod()
+    setThemeColor()
 })
 const openMC = () => {
     window.location.href = "minecraft://";
 }
+
+
+const ThemeMod = (mod, isClear) => {
+    md2DColor.value = md2Color.value = md3Color.value = md3DColor.value = '';
+    switch (mod) {
+        case 'Md2亮色':
+            StyleProvider(null);
+            md2Color.value = 'themeAct-color'
+            break
+        case 'Md2暗色':
+            StyleProvider(Themes.dark);
+            md2DColor.value = 'themeAct-color'
+            break
+        case 'Md3亮色':
+            StyleProvider(Themes.md3Light);
+            md3Color.value = 'themeAct-color'
+            break
+        case 'Md3暗色':
+            StyleProvider(Themes.md3Dark);
+            md3DColor.value = 'themeAct-color'
+            break
+    }
+    window.localStorage.setItem("ThemeMod", mod)
+    if (isClear) {
+        window.localStorage.removeItem('ThemeColor')
+    }
+
+}
+
 </script>
 
 <template>
@@ -49,16 +87,22 @@ const openMC = () => {
         </template>
 
         <template #right>
-            <var-menu>
-                <var-button
-                    color="transparent"
-                    text-color="#fff"
-                    round
-                    text
-                    @click="toggleTheme"
-                >
-                    <var-icon :name="darkMode ? 'weather-night' : 'white-balance-sunny'" :size="24"/>
-                </var-button>
+
+            <var-menu placement="bottom" :offset-y="6" :offset-x="-15">
+                <var-button-group block text type="primary">
+
+                    <var-icon name="palette" :size="24"/>
+                    <var-icon name="chevron-down" :size="24"/>
+
+                </var-button-group>
+
+                <template #menu>
+                    <var-cell :class="md2Color" @click="ThemeMod('Md2亮色',true)" ripple>Md2亮色</var-cell>
+                    <var-cell :class="md2DColor" @click="ThemeMod('Md2暗色',true)" ripple>Md2暗色</var-cell>
+                    <var-cell :class="md3Color" @click="ThemeMod('Md3亮色',true)" ripple>Md3亮色</var-cell>
+                    <var-cell :class="md3DColor" @click="ThemeMod('Md3暗色',true)" ripple>Md3暗色</var-cell>
+
+                </template>
             </var-menu>
         </template>
     </var-app-bar>
@@ -73,7 +117,7 @@ const openMC = () => {
                 </var-link>
             </p>
             <p>by：zihao_il</p>
-            <p>版本：1.14</p>
+            <p>版本：1.15</p>
             <div class="set-color">
             <span v-for="c in ['#3A7AFE','#A5E68A','#E67A7A','#FBD3BB','#D8B6EB','#F9C0C9','#A2D4E6']">
             <var-chip :round="false" :color='c' @click="setTheme(c)"></var-chip>
@@ -131,5 +175,29 @@ const openMC = () => {
 .diy-color {
     margin-top: 5px;
     margin-bottom: 10px;
+}
+
+.var-button-group {
+    border-radius: 8px;
+    padding: 5px;
+
+}
+
+.var-button-group:hover {
+    background-color: rgba(255, 255, 255, .2);
+}
+
+.var-button-group {
+    box-shadow: none;
+}
+
+
+.var-menu {
+    text-align: center;
+
+}
+
+.themeAct-color {
+    color: var(--color-primary);
 }
 </style>
