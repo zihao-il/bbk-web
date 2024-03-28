@@ -1,7 +1,7 @@
 {
   "name": "bbk-web",
   "private": true,
-  "version": "1.15.0",
+  "version": "1.16.0",
   "description": "Minecraft版本库web",
   "author": "zihao_il",
   "bugs": "https://github.com/zihao-il/bbk-web/issues",
@@ -13,15 +13,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@varlet/ui": "^3.0.3",
-    "axios": "^1.6.7",
-    "vite-plugin-compression": "^0.5.1",
+    "@varlet/ui": "^3.2.1",
+    "axios": "^1.6.8",
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.6.2",
+    "@vitejs/plugin-vue": "^5.0.4",
     "unplugin-auto-import": "^0.16.7",
     "unplugin-vue-components": "^0.25.2",
-    "vite": "^4.5.2"
+    "vite": "^5.2.6",
+    "vite-plugin-compression2": "^1.0.0"
   }
 }
