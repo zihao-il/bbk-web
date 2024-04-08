@@ -2,6 +2,10 @@
 import Index from './components/index.vue'
 import {StyleProvider, Themes} from '@varlet/ui'
 import {onBeforeMount, ref} from 'vue';
+import {useThemeStore} from "./store/theme.js";
+
+
+const store = useThemeStore()
 
 
 const show = ref(false)
@@ -12,7 +16,7 @@ const md3Color = ref('');
 const md3DColor = ref('');
 
 const setTheme = (color) => {
-    window.localStorage.setItem("ThemeColor", color)
+    store.setThemeColor(color)
     const rootStyle = document.documentElement.style
     rootStyle.setProperty('--color-primary', color)
 
@@ -20,14 +24,14 @@ const setTheme = (color) => {
 
 
 const setThemeMod = () => {
-    let themeMod = window.localStorage.getItem("ThemeMod")
+    let themeMod = store.ThemeMod
     if (themeMod) {
         ThemeMod(themeMod, false)
     }
 }
 
 const setThemeColor = () => {
-    let ThemeColor = window.localStorage.getItem("ThemeColor")
+    let ThemeColor = store.ThemeColor
     if (ThemeColor) {
         setTheme(ThemeColor)
     }
@@ -63,9 +67,9 @@ const ThemeMod = (mod, isClear) => {
             md3DColor.value = 'themeAct-color'
             break
     }
-    window.localStorage.setItem("ThemeMod", mod)
+    store.setThemeMod(mod)
     if (isClear) {
-        window.localStorage.removeItem('ThemeColor')
+        store.setThemeColor("")
     }
 
 }

@@ -2,7 +2,9 @@
 import {get_version, search_version} from "../api/index.js";
 import {onMounted, reactive, ref} from "vue";
 import {ActionSheet, Snackbar} from "@varlet/ui";
+import {useVersionStore} from "../store/version.js";
 
+const store = useVersionStore()
 
 const mcList = reactive([]);
 const newMcList = reactive([]);
@@ -56,19 +58,15 @@ const Init = () => {
     switch (isBeta.value) {
         case "全版本":
         case 0:
-            sessionStorage.setItem('version', sessionStorage.getItem('Beta'));
-
+            store.setVersion(store.Beta)
             break;
         case "正式版":
         case 1 :
-
-            sessionStorage.setItem('version', sessionStorage.getItem('Release'));
-
+            store.setVersion(store.Release)
             break;
         case "测试版":
         case 2 :
-            sessionStorage.setItem('version', sessionStorage.getItem('Beta'));
-
+            store.setVersion(store.Beta)
             break;
     }
 
@@ -83,9 +81,9 @@ async function getLastData() {
         return Snackbar.error("获取总版本号失败！")
     } else {
         vData = data.message
-        sessionStorage.setItem('isBeta', '');
-        sessionStorage.setItem('Release', vData[0].Release);
-        sessionStorage.setItem('Beta', vData[0].Beta);
+        store.setIsBeta("")
+        store.setRelease(vData[0].Release)
+        store.setBeta(vData[0].Beta)
         skeletonLoading.value = false
 
     }
@@ -114,11 +112,11 @@ onMounted(() => {
     getLastData()
     getNewMcList()
     let intervalId = setInterval(function () {
-        let betaValue = sessionStorage.getItem('Beta');
+        let betaValue = store.Beta;
         if (betaValue !== null) {
             clearInterval(intervalId);
             getMcData({"v": betaValue});
-            sessionStorage.setItem('version', betaValue);
+            store.setVersion(betaValue)
         }
     }, 100);
     window.scrollTo(0, 0);
@@ -160,7 +158,7 @@ function searchInput() {
     } else {
         newCard.value = ""
         Init()
-        getMcData({"v": sessionStorage.getItem('version'), "b": b}, true, false)
+        getMcData({"v": store.version, "b": b}, true, false)
         loading.value = true
         finished.value = false
         load()
@@ -171,14 +169,23 @@ function searchInput() {
 
 
 const setItem = (B, D) => {
-    sessionStorage.setItem('isBeta', B);
-    getMcData({"v": sessionStorage.getItem(D), "b": B}, true)
-    sessionStorage.setItem('version', sessionStorage.getItem(D));
+    let v = ""
+    switch (D){
+        case "Beta":
+            v = store.Beta
+            break
+        case "Release":
+            v = store.Release
+            break
+    }
+    store.setIsBeta(B)
+    getMcData({"v": v, "b": B}, true)
+    store.setVersion(v)
 }
 
 function handleClick(isBeta) {
     searchValue.value = ''
-    sessionStorage.setItem('version', sessionStorage.getItem('Beta'));
+    store.setVersion(store.Beta)
     switch (isBeta) {
         case "全版本":
             setItem("", "Beta")
@@ -196,8 +203,8 @@ function handleClick(isBeta) {
 
 function load() {
     setTimeout(() => {
-        let is_b = sessionStorage.getItem('isBeta');
-        let ver = sessionStorage.getItem('version');
+        let is_b =store.isBeta;
+        let ver = store.version;
         if (ver === "1.2.x") {
             loading.value = false
             finished.value = true
@@ -205,7 +212,7 @@ function load() {
         }
         let v = parseInt(ver.split('.')[1]) - 1;
         v = `1.${v}.x`;
-        sessionStorage.setItem('version', v);
+        store.setVersion(v);
         let d;
         if (is_b === "") {
             d = {"v": v}
