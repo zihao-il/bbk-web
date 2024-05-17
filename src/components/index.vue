@@ -3,8 +3,11 @@ import {get_version, search_version} from "../api/index.js";
 import {onMounted, reactive, ref} from "vue";
 import {ActionSheet, Snackbar} from "@varlet/ui";
 import {useVersionStore} from "../store/version.js";
+import {useI18n} from 'vue-i18n';
 
 const store = useVersionStore()
+const {t} = useI18n();
+
 
 const mcList = reactive([]);
 const newMcList = reactive([]);
@@ -25,7 +28,8 @@ async function getMcData(d, b, s) {
     if (s === true) {
         const {data} = await search_version(d)
         if (data.status === 201) {
-            return Snackbar.error("无此版本号！")
+            return Snackbar.error(t('language.latest_release'))
+
         }
         vData = data.message
 
@@ -97,10 +101,9 @@ async function getNewMcList() {
     newMcList.splice(0, mcList.length, ...data.message)
     for (let li of newMcList) {
         if (li.is_beta === 0) {
-            NewRelease.value = `最新正式版：${li.version}\n`
+            NewRelease.value = t('language.latest_release', {version: li.version});
         } else {
-            NewBeta.value = `最新测试版：${li.version}\n`
-
+            NewBeta.value = t('language.latest_beta', {version: li.version});
         }
     }
     // console.log(newMcList)
@@ -170,7 +173,7 @@ function searchInput() {
 
 const setItem = (B, D) => {
     let v = ""
-    switch (D){
+    switch (D) {
         case "Beta":
             v = store.Beta
             break
@@ -203,7 +206,7 @@ function handleClick(isBeta) {
 
 function load() {
     setTimeout(() => {
-        let is_b =store.isBeta;
+        let is_b = store.isBeta;
         let ver = store.version;
         if (ver === "1.2.x") {
             loading.value = false
@@ -285,9 +288,9 @@ const convertUTCDateToLocalDate = (utcDateString) => {
 <template>
 
     <var-tabs v-model:active="isBeta" @click="handleClick">
-        <var-tab name="全版本">全版本</var-tab>
-        <var-tab name="正式版">正式版</var-tab>
-        <var-tab name="测试版">测试版</var-tab>
+        <var-tab name="全版本">{{ $t('language.all') }}</var-tab>
+        <var-tab name="正式版">{{ $t('language.release') }}</var-tab>
+        <var-tab name="测试版">{{ $t('language.beta') }}</var-tab>
 
     </var-tabs>
 
@@ -295,7 +298,10 @@ const convertUTCDateToLocalDate = (utcDateString) => {
     <var-row justify="center">
         <var-col :span="22">
             <var-input variant="outlined" placeholder="请输入版本号" @input="searchInput" v-model="searchValue"/>
-            <var-checkbox @click="mSwitch" v-model="mSearch" class="mSwitch">模糊搜索</var-checkbox>
+            <var-checkbox @click="mSwitch" v-model="mSearch" class="mSwitch">{{
+                    $t('language.fuzzy_search')
+                }}
+            </var-checkbox>
         </var-col>
 
         <var-list loading-text="正在努力输出中..."
@@ -317,7 +323,7 @@ const convertUTCDateToLocalDate = (utcDateString) => {
                 <var-col v-for="li in mcList" :key="li.version_all">
                     <var-card
                         :title=li.version
-                        :subtitle="li.is_beta===0 ? '正式版' : '测试版'"
+                        :subtitle="li.is_beta===0 ? t('language.release') : t('language.beta')"
                         layout="column"
                         ripple
                         outline="outline"
@@ -326,17 +332,20 @@ const convertUTCDateToLocalDate = (utcDateString) => {
                         <template #description>
                             <var-space>
                                 <ul>
-                                    <li>更新日志：
+                                    <li>{{ $t('language.change_log') }}：
+
                                         <var-link type="primary" target="_blank"
                                                   v-bind:href="generateLink(li.version)"
                                                   underline="none">Minecraft Wiki
                                         </var-link>
                                     </li>
                                     <li>
-                                        更新时间：{{ convertUTCDateToLocalDate(li.update_time) }}
+                                        {{ $t('language.update_time') }}：{{ convertUTCDateToLocalDate(li.update_time) }}
+
                                     </li>
                                     <li>
-                                        文件大小：{{ li.file_size }}
+                                        {{ $t('language.file_size') }}：{{ li.file_size }}
+
                                     </li>
                                 </ul>
                             </var-space>

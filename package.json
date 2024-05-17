@@ -13,19 +13,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@varlet/touch-emulator": "^3.2.5",
-    "@varlet/ui": "^3.2.5",
+    "@varlet/touch-emulator": "^3.2.9",
+    "@varlet/ui": "^3.2.9",
     "axios": "^1.6.8",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-i18n": "^9.13.1"
   },
   "devDependencies": {
-    "@varlet/import-resolver": "^3.2.5",
+    "@intlify/unplugin-vue-i18n": "^4.0.0",
+    "@varlet/import-resolver": "^3.2.9",
     "@vitejs/plugin-vue": "^5.0.4",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "unplugin-auto-import": "^0.16.7",
     "unplugin-vue-components": "^0.25.2",
-    "vite": "^5.2.10",
+    "vite": "^5.2.11",
     "vite-plugin-compression2": "^1.1.0",
     "vite-plugin-sitemap": "^0.5.3"
   }

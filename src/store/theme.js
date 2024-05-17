@@ -3,7 +3,9 @@ import {defineStore} from 'pinia'
 export const useThemeStore = defineStore('theme', {
     state: () => ({
         ThemeMod: "Md2亮色",
-        ThemeColor: ""
+        ThemeColor: "",
+        language: "zh",
+
     }),
     actions: {
         setThemeMod(data) {
@@ -11,7 +13,10 @@ export const useThemeStore = defineStore('theme', {
         },
         setThemeColor(data) {
             this.ThemeColor = data
-        }
+        },
+        setLanguage(data) {
+            this.language = data
+        },
     },
     persist: {
         key: 'ThemeData',

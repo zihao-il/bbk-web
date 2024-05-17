@@ -5,10 +5,16 @@ import autoImport from 'unplugin-auto-import/vite'
 import {VarletImportResolver} from '@varlet/import-resolver'
 import viteCompression from "vite-plugin-compression2";
 import Sitemap from 'vite-plugin-sitemap'
+import {dirname, resolve} from 'node:path'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+import {fileURLToPath} from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue(),
+        VueI18nPlugin({
+            include: resolve(dirname(fileURLToPath(import.meta.url)), './src/lang/src/**'),
+        }),
         viteCompression(),
         Sitemap({
             hostname: 'https://127.0.0.1/',  //你的域名

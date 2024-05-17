@@ -4,6 +4,14 @@
 
 如需要静态版请把`src/utils/request.js`中`baseURL`取消注释再进行打包或者下载`dist-static.zip`文件
 
+## 参考页面
+
+[https://bbk.endyun.ltd/download](https://bbk.endyun.ltd/download)
+
+## 演示地址
+
+[https://a.endyun.ltd/](https://a.endyun.ltd/) 由netlify托管
+
 ## 构建方法
 
 你需要安装[nodejs](https://nodejs.org/)
@@ -55,10 +63,6 @@ nginx反向代理简单举例（静态版不需要）
         ...
 
 ```
-
-## 参考页面
-
-[https://bbk.endyun.ltd/download](https://bbk.endyun.ltd/download)
 
 ## 其他说明
 
