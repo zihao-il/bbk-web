@@ -12,6 +12,19 @@ export default {
         update_time: "Update time : ",
         file_size: "File size : ",
         no_version: "No such version number!",
+        search: "Please enter version number",
+        md2_light: "MD2 Light",
+        md2_dark: "MD2 Dark",
+        md3_light: "MD3 Light",
+        md3_dark: "MD3 Dark",
+        mc_start: "MC start !",
+        web_version: "Version : ",
+        open_source: "Open source address : ",
+        custom_color: "Custom color",
+        wrong_format: "wrong format! For example: #000000",
+        wiki_pe: "https://minecraft.wiki/w/Pocket_Edition_{version}",
+        wiki_be: "https://minecraft.wiki/w/Bedrock_Edition_Preview_{version}",
+        no_armv8: "This version does not have an installation package for ARMv8 architecture (only available in >≈1.16.X version)",
 
     }
 }

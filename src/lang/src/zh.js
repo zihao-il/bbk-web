@@ -12,6 +12,19 @@ export default {
         update_time: "更新时间：",
         file_size: "文件大小：",
         no_version: "无此版本号！",
+        search: "请输入版本号",
+        md2_light: "MD2 亮色",
+        md2_dark: "MD2 暗色",
+        md3_light: "MD3 亮色",
+        md3_dark: "MD3 暗色",
+        mc_start: "MC启动！",
+        web_version: "版本：",
+        open_source: "开源地址：",
+        custom_color: "自定义颜色",
+        wrong_format: "格式错误！例如：#000000",
+        wiki_pe: "https://zh.minecraft.wiki/w/%E6%90%BA%E5%B8%A6%E7%89%88{version}",
+        wiki_be: "https://zh.minecraft.wiki/w/%E5%9F%BA%E5%B2%A9%E7%89%88{version}",
+        no_armv8: "此版本没有ARMv8架构的安装包(>≈1.16.X版本才有)",
 
     }
 }

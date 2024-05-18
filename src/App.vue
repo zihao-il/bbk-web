@@ -130,10 +130,22 @@ const ThemeMod = (mod, isClear) => {
                     <var-icon name="chevron-down" :size="24"/>
                 </var-button-group>
                 <template #menu>
-                    <var-cell :class="md2Color" @click="ThemeMod('Md2亮色',true)" ripple>Md2亮色</var-cell>
-                    <var-cell :class="md2DColor" @click="ThemeMod('Md2暗色',true)" ripple>Md2暗色</var-cell>
-                    <var-cell :class="md3Color" @click="ThemeMod('Md3亮色',true)" ripple>Md3亮色</var-cell>
-                    <var-cell :class="md3DColor" @click="ThemeMod('Md3暗色',true)" ripple>Md3暗色</var-cell>
+                    <var-cell :class="md2Color" @click="ThemeMod('Md2亮色',true)" ripple>{{
+                            $t('language.md2_light')
+                        }}
+                    </var-cell>
+                    <var-cell :class="md2DColor" @click="ThemeMod('Md2暗色',true)" ripple>{{
+                            $t('language.md2_dark')
+                        }}
+                    </var-cell>
+                    <var-cell :class="md3Color" @click="ThemeMod('Md3亮色',true)" ripple>{{
+                            $t('language.md3_light')
+                        }}
+                    </var-cell>
+                    <var-cell :class="md3DColor" @click="ThemeMod('Md3暗色',true)" ripple>{{
+                            $t('language.md3_dark')
+                        }}
+                    </var-cell>
                 </template>
             </var-menu>
         </template>
@@ -143,12 +155,12 @@ const ThemeMod = (mod, isClear) => {
     <var-overlay v-model:show="show">
         <div class="overlay-content" @click.stop>
             <p>
-                开源地址：
+                {{ $t('language.open_source') }}
                 <var-link type="primary" href="https://github.com/zihao-il/bbk-web" target="_blank"
                           underline="none">GitHub
                 </var-link>
             </p>
-            <p>by：zihao_il</p>
+            <p>By：zihao_il</p>
             <p>版本：1.17</p>
             <div class="set-color">
             <span v-for="c in ['#3A7AFE','#A5E68A','#E67A7A','#FBD3BB','#D8B6EB','#F9C0C9','#A2D4E6']">
@@ -156,8 +168,8 @@ const ThemeMod = (mod, isClear) => {
             </span>
             </div>
             <div class="diy-color">
-                <var-input placeholder="自定义颜色"
-                           :rules="[(v) => /^#[a-fA-F0-9]{6}$/.test(v)  || '格式错误！例如：#000000']"
+                <var-input :placeholder="$t('language.custom_color')"
+                           :rules="[(v) => /^#[a-fA-F0-9]{6}$/.test(v)  || $t('language.wrong_format')]"
                            v-model="colorValue">
                     <template #append-icon>
                         <var-chip :round="false" :color='colorValue' @click="setTheme(colorValue)"></var-chip>
@@ -172,7 +184,7 @@ const ThemeMod = (mod, isClear) => {
                 type="primary"
                 @click="openMC"
             >
-                MC启动！
+                {{ $t('language.mc_start') }}
             </var-button>
         </div>
     </var-overlay>

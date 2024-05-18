@@ -236,9 +236,9 @@ const generateLink = (version) => {
     const versionParts = version.split('.');
     let ver = `${versionParts[0]}.${versionParts[1]}`
     if (parseFloat(ver) > 1.1) {
-        return `https://zh.minecraft.wiki/w/%E5%9F%BA%E5%B2%A9%E7%89%88${version}`;
+        return t('language.wiki_be', {version: version});
     } else {
-        return `https://zh.minecraft.wiki/w/%E6%90%BA%E5%B8%A6%E7%89%88${version}`;
+        return t('language.wiki_be', {version: version});
     }
 };
 
@@ -265,7 +265,7 @@ async function createSheet(li, vv) {
             window.open(d[action.name].ARMv7, '_blank');
         } else {
             if (d[action.name].ARMv8 === '') {
-                Snackbar.warning(`此版本没有ARMv8架构的安装包(>≈1.16.X版本才有)`)
+                Snackbar.warning(t('language.no_armv8'))
             } else {
                 window.open(d[action.name].ARMv8, '_blank');
             }
@@ -276,7 +276,7 @@ async function createSheet(li, vv) {
 }
 
 const convertUTCDateToLocalDate = (utcDateString) => {
-    if (utcDateString === null) {
+    if (utcDateString === null || utcDateString === "") {
         return "未确定时间"
     } else {
         const date = new Date(utcDateString);
@@ -301,7 +301,8 @@ const convertUTCDateToLocalDate = (utcDateString) => {
 
     <var-row justify="center">
         <var-col :span="22">
-            <var-input variant="outlined" placeholder="请输入版本号" @input="searchInput" v-model="searchValue"/>
+            <var-input variant="outlined" :placeholder="$t('language.search')" @input="searchInput"
+                       v-model="searchValue"/>
             <var-checkbox @click="mSwitch" v-model="mSearch" class="mSwitch">{{
                     $t('language.fuzzy_search')
                 }}
