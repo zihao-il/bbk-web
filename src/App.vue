@@ -39,7 +39,7 @@ const setThemeColor = () => {
     }
 }
 
-const setLangColor = () => {
+const setInitLang = () => {
     let language = store.language
     if (language) {
         setLang(language)
@@ -62,7 +62,7 @@ const setLang = (lang) => {
 onBeforeMount(() => {
     setThemeMod()
     setThemeColor()
-    setLangColor()
+    setInitLang()
 })
 const openMC = () => {
     window.location.href = "minecraft://";
@@ -99,10 +99,7 @@ const ThemeMod = (mod, isClear) => {
 </script>
 
 <template>
-    <var-app-bar title-position="center">
-        <template #default>
-            {{ $t('language.title') }}
-        </template>
+    <var-app-bar :title="$t('language.title')" title-position="center">
         <template #left>
             <var-button
                 color="transparent"
@@ -116,7 +113,7 @@ const ThemeMod = (mod, isClear) => {
         </template>
 
         <template #right>
-            <var-menu placement="bottom" :offset-y="6" :offset-x="-15" class="langMenu">
+            <var-menu placement="bottom" :offset-y="6" :offset-x="0" class="langMenu">
                 <var-button-group block text type="primary">
                     <var-icon name="translate" :size="24"/>
                     <var-icon name="chevron-down" :size="24"/>

@@ -8,9 +8,9 @@ export default {
         latest_release: "Latest Release: {version}",
         latest_beta: "Latest Beta: {version}",
         fuzzy_search: "Fuzzy Search",
-        change_log: "Change log",
-        update_time: "Update time",
-        file_size: "File size",
+        change_log: "Change log : ",
+        update_time: "Update time : ",
+        file_size: "File size : ",
         no_version: "No such version number!",
 
     }

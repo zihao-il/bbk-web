@@ -116,7 +116,7 @@ onMounted(() => {
     getNewMcList()
     let intervalId = setInterval(function () {
         let betaValue = store.Beta;
-        if (betaValue !== null) {
+        if (betaValue !== "") {
             clearInterval(intervalId);
             getMcData({"v": betaValue});
             store.setVersion(betaValue)
@@ -214,6 +214,10 @@ function load() {
             return
         }
         let v = parseInt(ver.split('.')[1]) - 1;
+
+        if (isNaN(v)) {
+            return Snackbar.error("请求失败，请刷新页面！")
+        }
         v = `1.${v}.x`;
         store.setVersion(v);
         let d;
@@ -332,7 +336,7 @@ const convertUTCDateToLocalDate = (utcDateString) => {
                         <template #description>
                             <var-space>
                                 <ul>
-                                    <li>{{ $t('language.change_log') }}：
+                                    <li>{{ $t('language.change_log') }}
 
                                         <var-link type="primary" target="_blank"
                                                   v-bind:href="generateLink(li.version)"
@@ -340,11 +344,11 @@ const convertUTCDateToLocalDate = (utcDateString) => {
                                         </var-link>
                                     </li>
                                     <li>
-                                        {{ $t('language.update_time') }}：{{ convertUTCDateToLocalDate(li.update_time) }}
+                                        {{ $t('language.update_time') }}{{ convertUTCDateToLocalDate(li.update_time) }}
 
                                     </li>
                                     <li>
-                                        {{ $t('language.file_size') }}：{{ li.file_size }}
+                                        {{ $t('language.file_size') }}{{ li.file_size }}
 
                                     </li>
                                 </ul>
