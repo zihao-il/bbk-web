@@ -12,7 +12,7 @@ export default {
         update_time: "Update time : ",
         file_size: "File size : ",
         no_version: "No such version number!",
-        search: "Please enter version number",
+        search: "Enter version number",
         md2_light: "MD2 Light",
         md2_dark: "MD2 Dark",
         md3_light: "MD3 Light",
