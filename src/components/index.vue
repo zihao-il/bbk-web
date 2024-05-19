@@ -28,7 +28,7 @@ async function getMcData(d, b, s) {
     if (s === true) {
         const {data} = await search_version(d)
         if (data.status === 201) {
-            return Snackbar.error(t('language.latest_release'))
+            return Snackbar.error(t('language.no_version'))
 
         }
         vData = data.message
@@ -76,13 +76,12 @@ const Init = () => {
 
 }
 
-
 async function getLastData() {
     let vData
 
     const {data} = await get_version({"v": "larversion"})
     if (data.status === 201) {
-        return Snackbar.error("获取总版本号失败！")
+        return Snackbar.error(t('language.fail_version'))
     } else {
         vData = data.message
         store.setIsBeta("")
@@ -216,7 +215,7 @@ function load() {
         let v = parseInt(ver.split('.')[1]) - 1;
 
         if (isNaN(v)) {
-            return Snackbar.error("请求失败，请刷新页面！")
+            return Snackbar.error(t('language.fail_request'))
         }
         v = `1.${v}.x`;
         store.setVersion(v);
@@ -256,7 +255,7 @@ async function createSheet(li, vv) {
 
     const action = await ActionSheet({
         actions: transformedKeys,
-        title: '下载推荐(OneDrive_365>OneDrive_E5>123盘)'
+        title: t('language.Download_rec')
     })
 
     if (action !== 'close') {
@@ -277,7 +276,7 @@ async function createSheet(li, vv) {
 
 const convertUTCDateToLocalDate = (utcDateString) => {
     if (utcDateString === null || utcDateString === "") {
-        return "未确定时间"
+        return t('language.undetermined_time')
     } else {
         const date = new Date(utcDateString);
         const year = date.getFullYear();
@@ -309,9 +308,9 @@ const convertUTCDateToLocalDate = (utcDateString) => {
             </var-checkbox>
         </var-col>
 
-        <var-list loading-text="正在努力输出中..."
-                  finished-text="一滴都没有了"
-                  error-text="出错了出错了"
+        <var-list :loading-text="$t('language.t_loading')"
+                  :finished-text="$t('language.t_finished')"
+                  :error-text="$t('language.t_error')"
                   :finished="finished"
                   offset="30"
                   v-model:loading="loading"
@@ -392,16 +391,16 @@ const convertUTCDateToLocalDate = (utcDateString) => {
         <var-back-top :duration="300"/>
     </var-row>
     <var-popup :default-style="false" v-model:show="errorPop">
-        <var-result class="result" type="empty" title="无法获取版本列表">
+        <var-result class="result" type="empty" :title="$t('language.unable_version')">
             <template #description>
-                <p>请联系管理员修复！</p>
+                <p>{{ $t('language.fix_web') }}</p>
             </template>
             <template #footer>
                 <var-button
                     color="var(--result-empty-color)"
                     text-color="#fff"
                     @click="errorPop = false">
-                    知道了
+                    {{ $t('language.know') }}
                 </var-button>
 
             </template>
@@ -411,9 +410,9 @@ const convertUTCDateToLocalDate = (utcDateString) => {
 
     <var-snackbar type="danger" v-model:show="show" :vertical="true">
         <div>
-            <h3>有能力者请支持正版！</h3>
-            <p>本站所有的安装包仅供交流学习，禁止分享到任何平台，下载后请24小时内及时删除！</p>
-            <p>如需要游玩请前往 Minecraft官网 购买正版！！！</p>
+            <h3>{{ $t('language.support_genuine') }}</h3>
+            <p>{{ $t('language.del_packages') }}</p>
+            <p>{{ $t('language.get_genuine') }}</p>
 
             <p>{{ NewRelease }}</p>
             <p>{{ NewBeta }}</p>
@@ -423,7 +422,7 @@ const convertUTCDateToLocalDate = (utcDateString) => {
         <template #action>
 
             <var-link type="primary" href="https://www.minecraft.net/">
-                <var-button type="primary" size="small">Minecraft官网</var-button>
+                <var-button type="primary" size="small">{{ $t('language.mc_website') }}</var-button>
             </var-link>
 
 

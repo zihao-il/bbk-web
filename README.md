@@ -4,6 +4,8 @@
 
 如需要静态版请把`src/utils/request.js`中`baseURL`取消注释再进行打包或者下载`dist-static.zip`文件
 
+所有语言都是使用谷歌翻译，如果翻译有问题请修改`src/lang/src`中的文件
+
 ## 参考页面
 
 [https://bbk.endyun.ltd/download](https://bbk.endyun.ltd/download)

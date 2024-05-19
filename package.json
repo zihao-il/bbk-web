@@ -13,15 +13,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@varlet/touch-emulator": "^3.2.9",
-    "@varlet/ui": "^3.2.9",
+    "@varlet/touch-emulator": "^3.2.10",
+    "@varlet/ui": "^3.2.10",
     "axios": "^1.6.8",
     "vue": "^3.3.4",
     "vue-i18n": "^9.13.1"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^4.0.0",
-    "@varlet/import-resolver": "^3.2.9",
+    "@varlet/import-resolver": "^3.2.10",
     "@vitejs/plugin-vue": "^5.0.4",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",

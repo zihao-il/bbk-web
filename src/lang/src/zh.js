@@ -25,6 +25,20 @@ export default {
         wiki_pe: "https://zh.minecraft.wiki/w/%E6%90%BA%E5%B8%A6%E7%89%88{version}",
         wiki_be: "https://zh.minecraft.wiki/w/%E5%9F%BA%E5%B2%A9%E7%89%88{version}",
         no_armv8: "此版本没有ARMv8架构的安装包(>≈1.16.X版本才有)",
+        fail_version: "获取总版本号失败！",
+        fail_request: "请求失败，请刷新页面！",
+        Download_rec: "下载推荐(OneDrive_365>OneDrive_E5>123盘)",
+        undetermined_time: "未确定时间",
+        t_loading: "正在努力输出中...(ﾉﾟ▽ﾟ)ﾉ",
+        t_finished: "真的一滴都没有啦~o(╥﹏╥)o",
+        t_error: "出错啦出错啦〒▽〒",
+        unable_version: "无法获取版本列表",
+        fix_web: "请联系管理员修复！",
+        know: "知道了",
+        support_genuine: "有能力者请支持正版！",
+        del_packages: "本站所有的安装包仅供交流学习，禁止分享到任何平台，下载后请24小时内及时删除！",
+        get_genuine: "如需要游玩请前往 Minecraft官网 购买正版！！！",
+        mc_website: "Minecraft官网",
 
     }
 }

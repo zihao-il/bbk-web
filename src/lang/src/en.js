@@ -25,6 +25,20 @@ export default {
         wiki_pe: "https://minecraft.wiki/w/Pocket_Edition_{version}",
         wiki_be: "https://minecraft.wiki/w/Bedrock_Edition_Preview_{version}",
         no_armv8: "This version does not have an installation package for ARMv8 architecture (only available in >≈1.16.X version)",
+        fail_version: "Failed to get total version number!",
+        fail_request: "The request failed, please refresh the page!",
+        Download_rec: "Download recommendations(OneDrive 365>OneDrive E5>123盘)",
+        undetermined_time: "Undetermined time",
+        t_loading: "Loading... (ﾉﾟ▽ﾟ)ﾉ",
+        t_finished: "Finish o(╥﹏╥)o",
+        t_error: "Error 〒▽〒",
+        unable_version: "Unable to get version list",
+        fix_web: "Please contact the administrator to fix it!",
+        know: "Know",
+        support_genuine: "If you are able, please support the genuine version!",
+        del_packages: "All installation packages on this site are for communication and learning only and are not allowed to be shared on any platform. Please delete them within 24 hours after downloading!",
+        get_genuine: "If you need to play, please go to the official Minecraft website to purchase the genuine version! ! !",
+        mc_website: "Minecraft official website",
 
     }
 }
