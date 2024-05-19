@@ -119,7 +119,7 @@ const ThemeMod = (mod, isClear) => {
                     <var-icon name="chevron-down" :size="24"/>
                 </var-button-group>
                 <template #menu>
-                    <var-cell :class="langBtnZh" @click="setLang('zh')" ripple>中文</var-cell>
+                    <var-cell :class="langBtnZh" class="t-center" @click="setLang('zh')" ripple>中文</var-cell>
                     <var-cell :class="langBtnEh" @click="setLang('en')" ripple>English</var-cell>
                 </template>
             </var-menu>
@@ -161,7 +161,7 @@ const ThemeMod = (mod, isClear) => {
                 </var-link>
             </p>
             <p>By：zihao_il</p>
-            <p>版本：1.17</p>
+            <p>版本：1.18</p>
             <div class="set-color">
             <span v-for="c in ['#3A7AFE','#A5E68A','#E67A7A','#FBD3BB','#D8B6EB','#F9C0C9','#A2D4E6']">
             <var-chip :round="false" :color='c' @click="setTheme(c)"></var-chip>
@@ -235,11 +235,10 @@ const ThemeMod = (mod, isClear) => {
     box-shadow: none;
 }
 
-
-.var-menu {
+.t-center {
     text-align: center;
-
 }
+
 
 .themeAct-color {
     color: var(--color-primary);
@@ -248,4 +247,5 @@ const ThemeMod = (mod, isClear) => {
 .langMenu {
     margin-right: 5px;
 }
+
 </style>
