@@ -169,7 +169,7 @@ const ThemeMod = (mod, isClear) => {
             </div>
             <div class="diy-color">
                 <var-input :placeholder="$t('language.custom_color')"
-                           :rules="[(v) => /^#[a-fA-F0-9]{6}$/.test(v)  || $t('language.wrong_format')]"
+                           :rules="[(v) => /^#[a-fA-F0-9]{6}$/.test(v)  || $t('language.incorrect_format')]"
                            v-model="colorValue">
                     <template #append-icon>
                         <var-chip :round="false" :color='colorValue' @click="setTheme(colorValue)"></var-chip>

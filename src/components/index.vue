@@ -255,7 +255,7 @@ async function createSheet(li, vv) {
 
     const action = await ActionSheet({
         actions: transformedKeys,
-        title: t('language.Download_rec')
+        title: t('language.download_rec')
     })
 
     if (action !== 'close') {
