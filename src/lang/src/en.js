@@ -22,6 +22,8 @@ export default {
         open_source: "Open Source : ",
         custom_color: "Custom Color",
         incorrect_format: "Incorrect format! For example: #000000",
+        wiki_pe: "https://zh.minecraft.wiki/w/%E6%90%BA%E5%B8%A6%E7%89%88{version}",
+        wiki_be: "https://zh.minecraft.wiki/w/%E5%9F%BA%E5%B2%A9%E7%89%88{version}",
         no_armv8: "This version does not have an ARMv8 architecture package (versions >≈1.16.X only)",
         fail_version: "Failed to get total version number!",
         fail_request: "Request failed, please refresh the page!",

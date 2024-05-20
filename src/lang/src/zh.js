@@ -21,7 +21,7 @@ export default {
         web_version: "版本：",
         open_source: "开源地址：",
         custom_color: "自定义颜色",
-        wrong_format: "格式错误！例如：#000000",
+        incorrect_format: "格式错误！例如：#000000",
         wiki_pe: "https://zh.minecraft.wiki/w/%E6%90%BA%E5%B8%A6%E7%89%88{version}",
         wiki_be: "https://zh.minecraft.wiki/w/%E5%9F%BA%E5%B2%A9%E7%89%88{version}",
         no_armv8: "此版本没有ARMv8架构的安装包(>≈1.16.X版本才有)",
