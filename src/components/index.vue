@@ -244,6 +244,9 @@ const generateLink = (version) => {
 
 async function createSheet(li, vv) {
     const d = JSON.parse(li.link)
+    if (d.hasOwnProperty("OneDrive_365")) {  // 删除OneDrive_365下载链接。
+        delete d["OneDrive_365"];
+    }
     const keys = Object.keys(d);
     keys.reverse();
     const transformedKeys = keys.map(key => {
