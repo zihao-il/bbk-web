@@ -234,10 +234,10 @@ function load() {
 const generateLink = (version) => {
     const versionParts = version.split('.');
     let ver = `${versionParts[0]}.${versionParts[1]}`
-    if (parseFloat(ver) > 1.1) {
+    if (ver > "1.1") {
         return t('language.wiki_be', {version: version});
     } else {
-        return t('language.wiki_be', {version: version});
+        return t('language.wiki_pe', {version: version});
     }
 };
 
