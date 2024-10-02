@@ -99,50 +99,50 @@ const ThemeMod = (mod, isClear) => {
 </script>
 
 <template>
-    <var-app-bar :title="$t('language.title')" title-position="center">
+    <var-app-bar :title="$t('language.title')" fixed placeholder safe-area-top title-position="center">
         <template #left>
             <var-button
                 color="transparent"
-                text-color="#fff"
                 round
                 text
+                text-color="#fff"
                 @click="show = true"
             >
-                <var-icon name="github" :size="24"/>
+                <var-icon :size="24" name="github"/>
             </var-button>
         </template>
 
         <template #right>
-            <var-menu placement="bottom" :offset-y="6" :offset-x="0" class="langMenu">
+            <var-menu :offset-x="0" :offset-y="6" class="langMenu" placement="bottom">
                 <var-button-group block text type="primary">
-                    <var-icon name="translate" :size="24"/>
-                    <var-icon name="chevron-down" :size="24"/>
+                    <var-icon :size="24" name="translate"/>
+                    <var-icon :size="24" name="chevron-down"/>
                 </var-button-group>
                 <template #menu>
-                    <var-cell :class="langBtnZh" class="t-center" @click="setLang('zh')" ripple>中文</var-cell>
-                    <var-cell :class="langBtnEh" @click="setLang('en')" ripple>English</var-cell>
+                    <var-cell :class="langBtnZh" class="t-center" ripple @click="setLang('zh')">中文</var-cell>
+                    <var-cell :class="langBtnEh" ripple @click="setLang('en')">English</var-cell>
                 </template>
             </var-menu>
 
-            <var-menu placement="bottom" :offset-y="6" :offset-x="-15">
+            <var-menu :offset-x="-15" :offset-y="6" placement="bottom">
                 <var-button-group block text type="primary">
-                    <var-icon name="palette" :size="24"/>
-                    <var-icon name="chevron-down" :size="24"/>
+                    <var-icon :size="24" name="palette"/>
+                    <var-icon :size="24" name="chevron-down"/>
                 </var-button-group>
                 <template #menu>
-                    <var-cell :class="md2Color" @click="ThemeMod('Md2亮色',true)" ripple>{{
+                    <var-cell :class="md2Color" ripple @click="ThemeMod('Md2亮色',true)">{{
                             $t('language.md2_light')
                         }}
                     </var-cell>
-                    <var-cell :class="md2DColor" @click="ThemeMod('Md2暗色',true)" ripple>{{
+                    <var-cell :class="md2DColor" ripple @click="ThemeMod('Md2暗色',true)">{{
                             $t('language.md2_dark')
                         }}
                     </var-cell>
-                    <var-cell :class="md3Color" @click="ThemeMod('Md3亮色',true)" ripple>{{
+                    <var-cell :class="md3Color" ripple @click="ThemeMod('Md3亮色',true)">{{
                             $t('language.md3_light')
                         }}
                     </var-cell>
-                    <var-cell :class="md3DColor" @click="ThemeMod('Md3暗色',true)" ripple>{{
+                    <var-cell :class="md3DColor" ripple @click="ThemeMod('Md3暗色',true)">{{
                             $t('language.md3_dark')
                         }}
                     </var-cell>
@@ -156,7 +156,7 @@ const ThemeMod = (mod, isClear) => {
         <div class="overlay-content" @click.stop>
             <p>
                 {{ $t('language.open_source') }}
-                <var-link type="primary" href="https://github.com/zihao-il/bbk-web" target="_blank"
+                <var-link href="https://github.com/zihao-il/bbk-web" target="_blank" type="primary"
                           underline="none">GitHub
                 </var-link>
             </p>
@@ -164,23 +164,23 @@ const ThemeMod = (mod, isClear) => {
             <p>版本：1.18</p>
             <div class="set-color">
             <span v-for="c in ['#3A7AFE','#A5E68A','#E67A7A','#FBD3BB','#D8B6EB','#F9C0C9','#A2D4E6']">
-            <var-chip :round="false" :color='c' @click="setTheme(c)"></var-chip>
+            <var-chip :color='c' :round="false" @click="setTheme(c)"></var-chip>
             </span>
             </div>
             <div class="diy-color">
-                <var-input :placeholder="$t('language.custom_color')"
-                           :rules="[(v) => /^#[a-fA-F0-9]{6}$/.test(v)  || $t('language.incorrect_format')]"
-                           v-model="colorValue">
+                <var-input v-model="colorValue"
+                           :placeholder="$t('language.custom_color')"
+                           :rules="[(v) => /^#[a-fA-F0-9]{6}$/.test(v)  || $t('language.incorrect_format')]">
                     <template #append-icon>
-                        <var-chip :round="false" :color='colorValue' @click="setTheme(colorValue)"></var-chip>
+                        <var-chip :color='colorValue' :round="false" @click="setTheme(colorValue)"></var-chip>
 
                     </template>
                 </var-input>
             </div>
             <var-button
+                block
                 class="fixed-button"
                 round
-                block
                 type="primary"
                 @click="openMC"
             >
@@ -192,22 +192,17 @@ const ThemeMod = (mod, isClear) => {
 
 <style scoped>
 .overlay-content {
-    padding: 20px 24px;
     width: 250px;
+    padding: 20px 24px;
     background: var(--button-default-color);
 }
 
-.var-app-bar {
-    position: sticky;
-    top: 0;
-    z-index: 99;
-}
 
 .fixed-button {
-    border-radius: 10px;
     font-size: 0.8em;
-    padding: 0.5em 0.5em;
     margin-top: 0.5em;
+    padding: 0.5em 0.5em;
+    border-radius: 10px;
 }
 
 .set-color {
@@ -222,8 +217,8 @@ const ThemeMod = (mod, isClear) => {
 }
 
 .var-button-group {
-    border-radius: 8px;
     padding: 5px;
+    border-radius: 8px;
 
 }
 
