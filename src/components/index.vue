@@ -333,7 +333,7 @@ const convertUTCDateToLocalDate = (utcDateString) => {
                         :subtitle="li.is_beta===0 ? t('language.release') : t('language.beta')"
                         layout="column"
                         ripple
-                        outline="outline"
+                        variant="outlined"
                         :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
                     >
                         <template #description>
@@ -476,4 +476,10 @@ ul {
 .b-radius {
     border-radius: 10px;
 }
+
+.var-skeleton{
+    position: relative;
+    z-index: 0;
+}
+
 </style>
