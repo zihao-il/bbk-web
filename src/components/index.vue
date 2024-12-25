@@ -243,7 +243,12 @@ const generateLink = (version) => {
 
 
 async function createSheet(li, vv) {
-    const d = JSON.parse(li.link)
+    let d;
+    try {
+        d = JSON.parse(li.link);
+    } catch (e) {
+        d = li.link;
+    }
     if (d.hasOwnProperty("OneDrive_365")) {  // 删除OneDrive_365下载链接。
         delete d["OneDrive_365"];
     }
