@@ -161,7 +161,7 @@ const ThemeMod = (mod, isClear) => {
                 </var-link>
             </p>
             <p>By：zihao_il</p>
-            <p>版本：1.19</p>
+            <p>版本：1.20</p>
             <div class="set-color">
             <span v-for="c in ['#3A7AFE','#A5E68A','#E67A7A','#FBD3BB','#D8B6EB','#F9C0C9','#A2D4E6']">
             <var-chip :color='c' :round="false" @click="setTheme(c)"></var-chip>

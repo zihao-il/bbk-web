@@ -27,7 +27,7 @@ export default {
         no_armv8: "This version does not have an ARMv8 architecture package (versions >≈1.16.X only)",
         fail_version: "Failed to get total version number!",
         fail_request: "Request failed, please refresh the page!",
-        download_rec: "Download Recommendation (OneDrive 365>OneDrive E5>123盘)",
+        download_rec: "Download Recommendation (OneDrive 365>OneDrive>123盘)",
         undetermined_time: "Undetermined time",
         t_loading: "Loading... (ﾉﾟ▽ﾟ)ﾉ",
         t_finished: "Finish o(╥﹏╥)o",

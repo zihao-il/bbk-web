@@ -27,7 +27,7 @@ export default {
         no_armv8: "此版本没有ARMv8架构的安装包(>≈1.16.X版本才有)",
         fail_version: "获取总版本号失败！",
         fail_request: "请求失败，请刷新页面！",
-        download_rec: "下载推荐(OneDrive_365>OneDrive_E5>123盘)",
+        download_rec: "下载推荐(OneDrive_365>OneDrive>123盘)",
         undetermined_time: "未确定时间",
         t_loading: "正在努力输出中...(ﾉﾟ▽ﾟ)ﾉ",
         t_finished: "真的一滴都没有啦~o(╥﹏╥)o",
