@@ -31,13 +31,6 @@ export default defineConfig({
         })],
     base: '/',
     server: {
-        host: '0.0.0.0',
-        proxy: {
-            "/api": {
-                target: 'http://bbk.endyun.ltd:9000/',
-                changeOrigin: true,
-            },
-        }
-
+        host: '0.0.0.0'
     },
 })

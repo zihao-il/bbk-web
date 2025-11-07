@@ -2,7 +2,7 @@ import {defineStore} from 'pinia'
 
 export const useThemeStore = defineStore('theme', {
     state: () => ({
-        ThemeMod: "Md2亮色",
+        ThemeMod: "Md3亮色",
         ThemeColor: "",
         language: "zh",
 

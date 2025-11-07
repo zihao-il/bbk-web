@@ -2,8 +2,6 @@
 
 ## 说明
 
-如需要静态版请把`src/utils/request.js`中`baseURL`取消注释再进行打包或者下载`dist-static.zip`文件
-
 所有语言都是使用谷歌翻译，如果翻译有问题请修改`src/lang/src`中的文件
 
 ## 参考页面
@@ -40,30 +38,6 @@ npm run dev
 
 ```bash
 npm run preview
-```
-
-nginx反向代理简单举例（静态版不需要）
-
-```bash
-    ...
-    
-    gzip  on;
-    server {
-        listen       80;
-        server_name  localhost;
-
-        location / {
-            root   html;
-            index  index.html index.htm;
-            try_files $uri $uri/ /index.html;
-        }
-        
-        location /api {
-            proxy_pass http://bbk.endyun.ltd:9000/api; 
-        }
-        
-        ...
-
 ```
 
 ## 其他说明
