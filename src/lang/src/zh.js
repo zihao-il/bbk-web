@@ -39,6 +39,8 @@ export default {
         del_packages: "本站所有的安装包仅供交流学习，禁止分享到任何平台，下载后请24小时内及时删除！",
         get_genuine: "如需要游玩请前往 Minecraft官网 购买正版！！！",
         mc_website: "Minecraft官网",
+        horizontal_spacing: "水平间距(默认:22)：",
+        vertical_spacing: "垂直间距(默认:12)：",
 
     }
 }

@@ -5,6 +5,8 @@ export const useThemeStore = defineStore('theme', {
         ThemeMod: "Md3亮色",
         ThemeColor: "",
         language: "zh",
+        Spacing: 22,
+        Vertical: 12,
 
     }),
     actions: {

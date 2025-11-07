@@ -3,9 +3,11 @@ import {get_version, search_version} from "../api/index.js";
 import {onMounted, reactive, ref} from "vue";
 import {ActionSheet, Snackbar} from "@varlet/ui";
 import {useVersionStore} from "../store/version.js";
+import {useThemeStore} from "../store/theme.js";
 import {useI18n} from 'vue-i18n';
 
 const store = useVersionStore()
+const storeTheme = useThemeStore()
 const {t} = useI18n();
 
 
@@ -306,100 +308,105 @@ const convertUTCDateToLocalDate = (utcDateString) => {
     </var-tabs>
 
 
-    <var-row justify="center">
-        <var-col :span="22">
-            <var-input variant="outlined" :placeholder="$t('language.search')" @input="searchInput"
-                       v-model="searchValue"/>
-            <var-checkbox @click="mSwitch" v-model="mSearch" class="mSwitch">{{
+    <var-row :gutter="[storeTheme.Vertical, 0]" justify="center">
+        <var-col :span="storeTheme.Spacing">
+            <var-input v-model="searchValue" :placeholder="$t('language.search')" variant="outlined"
+                       @input="searchInput"/>
+            <var-checkbox v-model="mSearch" class="mSwitch" @click="mSwitch">{{
                     $t('language.fuzzy_search')
                 }}
             </var-checkbox>
         </var-col>
+        <var-col :span="storeTheme.Spacing">
 
-        <var-list :loading-text="$t('language.t_loading')"
-                  :finished-text="$t('language.t_finished')"
-                  :error-text="$t('language.t_error')"
-                  :finished="finished"
-                  offset="30"
-                  v-model:loading="loading"
-                  check
-                  @load="load">
+            <var-list v-model:loading="loading"
+                      :error-text="$t('language.t_error')"
+                      :finished="finished"
+                      :finished-text="$t('language.t_finished')"
+                      :loading-text="$t('language.t_loading')"
+                      check
+                      offset="30"
+                      @load="load">
 
-            <var-skeleton
-                title
-                card
-                :rows="3"
-                :loading="skeletonLoading"
-            >
+                <var-skeleton
+                    :loading="skeletonLoading"
+                    :rows="3"
+                    card
+                    title
+                >
 
-                <var-col v-for="li in mcList" :key="li.version_all">
-                    <var-card
-                        :title=li.version
-                        :subtitle="li.is_beta===0 ? t('language.release') : t('language.beta')"
-                        layout="column"
-                        ripple
-                        variant="outlined"
-                        :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
-                    >
-                        <template #description>
-                            <var-space>
-                                <ul>
-                                    <li>{{ $t('language.change_log') }}
+                    <var-col v-for="li in mcList" :key="li.version_all" :span="24">
+                        <var-card
+                            :class="li.is_beta === 0 ? 'card-R' : 'card-B'"
+                            :subtitle="li.is_beta===0 ? t('language.release') : t('language.beta')"
+                            :title=li.version
+                            layout="column"
+                            ripple
+                            variant="outlined"
+                        >
+                            <template #description>
+                                <var-space>
+                                    <ul>
+                                        <li>{{ $t('language.change_log') }}
 
-                                        <var-link type="primary" target="_blank"
-                                                  v-bind:href="generateLink(li.version)"
-                                                  underline="none">Minecraft Wiki
-                                        </var-link>
-                                    </li>
-                                    <li>
-                                        {{ $t('language.update_time') }}{{ convertUTCDateToLocalDate(li.update_time) }}
+                                            <var-link target="_blank" type="primary"
+                                                      underline="none"
+                                                      v-bind:href="generateLink(li.version)">Minecraft Wiki
+                                            </var-link>
+                                        </li>
+                                        <li>
+                                            {{ $t('language.update_time') }}{{
+                                                convertUTCDateToLocalDate(li.update_time)
+                                            }}
 
-                                    </li>
-                                    <li>
-                                        {{ $t('language.file_size') }}{{ li.file_size }}
+                                        </li>
+                                        <li>
+                                            {{ $t('language.file_size') }}{{ li.file_size }}
 
-                                    </li>
-                                </ul>
-                            </var-space>
+                                        </li>
+                                    </ul>
+                                </var-space>
 
-                        </template>
+                            </template>
 
-                        <template #extra>
-                            <var-space>
-                                <var-chip plain @click="createSheet(li,'v7')" type="primary">
-                                    ARMv7
-                                    <template #right>
-                                        <var-icon name="download"/>
-                                    </template>
+                            <template #extra>
+                                <var-space>
+                                    <var-chip plain type="primary" @click="createSheet(li,'v7')">
+                                        ARMv7
+                                        <template #right>
+                                            <var-icon name="download"/>
+                                        </template>
 
-                                </var-chip>
+                                    </var-chip>
 
-                                <var-chip plain @click="createSheet(li,'v8')" type="primary">
-                                    ARMv8
-                                    <template #right>
-                                        <var-icon name="download"/>
-                                    </template>
-                                </var-chip>
+                                    <var-chip plain type="primary" @click="createSheet(li,'v8')">
+                                        ARMv8
+                                        <template #right>
+                                            <var-icon name="download"/>
+                                        </template>
+                                    </var-chip>
 
-                            </var-space>
-                        </template>
-                    </var-card>
-                </var-col>
-            </var-skeleton>
+                                </var-space>
+                            </template>
+                        </var-card>
+                    </var-col>
+                </var-skeleton>
 
-        </var-list>
-        <var-col justify="center">
+            </var-list>
+        </var-col>
+
+        <var-col :span="storeTheme.Spacing" justify="center">
             <div>
                 by：
-                <var-link type="primary" href="https://github.com/zihao-il" target="_blank"
+                <var-link href="https://github.com/zihao-il" target="_blank" type="primary"
                           underline="none">zihao_il
                 </var-link>
             </div>
         </var-col>
         <var-back-top :duration="300"/>
     </var-row>
-    <var-popup :default-style="false" v-model:show="errorPop">
-        <var-result class="result" type="empty" :title="$t('language.unable_version')">
+    <var-popup v-model:show="errorPop" :default-style="false">
+        <var-result :title="$t('language.unable_version')" class="result" type="empty">
             <template #description>
                 <p>{{ $t('language.fix_web') }}</p>
             </template>
@@ -416,7 +423,7 @@ const convertUTCDateToLocalDate = (utcDateString) => {
     </var-popup>
 
 
-    <var-snackbar type="danger" v-model:show="show" :vertical="true">
+    <var-snackbar v-model:show="show" :vertical="true" type="danger">
         <div>
             <h3>{{ $t('language.support_genuine') }}</h3>
             <p>{{ $t('language.del_packages') }}</p>
@@ -429,8 +436,8 @@ const convertUTCDateToLocalDate = (utcDateString) => {
 
         <template #action>
 
-            <var-link type="primary" href="https://www.minecraft.net/">
-                <var-button type="primary" size="small">{{ $t('language.mc_website') }}</var-button>
+            <var-link href="https://www.minecraft.net/" type="primary">
+                <var-button size="small" type="primary">{{ $t('language.mc_website') }}</var-button>
             </var-link>
 
 
@@ -448,6 +455,7 @@ const convertUTCDateToLocalDate = (utcDateString) => {
 
 .var-card {
     margin-bottom: 1.25em;
+    --card-footer-margin: 1em 0 0 0;
 }
 
 .var-row {
@@ -456,18 +464,10 @@ const convertUTCDateToLocalDate = (utcDateString) => {
 
 
 .var-list {
-    width: 92%;
-
+    width: 100%;
     min-height: 100vh;
 }
 
-
-ul {
-    margin-left: 2em;
-    margin-top: 0.75em;
-    list-style-type: disc;
-
-}
 
 .mSwitch {
     margin-top: 25px;
@@ -482,7 +482,7 @@ ul {
     border-radius: 10px;
 }
 
-.var-skeleton{
+.var-skeleton {
     position: relative;
     z-index: 0;
 }

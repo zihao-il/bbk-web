@@ -39,6 +39,7 @@ export default {
         del_packages: "All installation packages on this site are for communication and learning purposes only. Do not share them on any platform. Please delete them within 24 hours after downloading!",
         get_genuine: "If you want to play, please purchase the official version from the Minecraft website!!!",
         mc_website: "Minecraft Official Website",
-
+        horizontal_spacing: "Horizontal Spacing (Default: 22):",
+        vertical_spacing: "Vertical Spacing (Default: 12):",
     }
 }

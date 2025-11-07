@@ -177,6 +177,14 @@ const ThemeMod = (mod, isClear) => {
                     </template>
                 </var-input>
             </div>
+            <div class="spacing-box">
+                {{ $t('language.horizontal_spacing') }}
+                <var-slider v-model="store.Spacing" max="24" min="13"/>
+            </div>
+            <div class="vertical-box">
+                {{ $t('language.vertical_spacing') }}
+                <var-slider v-model="store.Vertical" max="100" min="0"/>
+            </div>
             <var-button
                 block
                 class="fixed-button"

@@ -19,9 +19,9 @@ body {
 
 }
 
-
 .var-back-top {
     --back-top-bottom: 70px;
+    --back-top-right: 1em;
 
 }
 
@@ -37,13 +37,14 @@ body {
     --card-subtitle-color: rgba(255, 0, 0);
 }
 
-.var-card {
-    --card-footer-margin: 1em 0 0px 0;
+ul {
+    margin-top: 0.75em;
+    margin-left: 0;
+    padding-left: 1em;
+    list-style-position: outside;
 }
 
-.var-row {
-    margin-right: 0 !important;
+ul > li {
+    margin-bottom: 0.35em;
+    margin-left: 1.5em;
 }
-
-
-
