@@ -204,6 +204,14 @@ function handleClick(isBeta) {
 
 }
 
+const versionList  = [
+    '28.x', '27.x', '26.x', '1.21.x', '1.20.x',
+    '1.19.x', '1.18.x', '1.17.x', '1.16.x',
+    '1.15.x', '1.14.x', '1.13.x', '1.12.x',
+    '1.11.X', '1.10.X', '1.9.X', '1.8.x',
+    '1.7.x', '1.6.x', '1.5.x', '1.4.x',
+    '1.3.x', '1.2.x'
+]
 
 function load() {
     setTimeout(() => {
@@ -215,19 +223,16 @@ function load() {
             return
         }
         let v = parseInt(ver.split('.')[1]) - 1;
-
-        if (isNaN(v)) {
+        const currentIndex = versionList.indexOf(ver)
+        if (currentIndex === -1) {
             return Snackbar.error(t('language.fail_request'))
-        }
-        v = `1.${v}.x`;
-        store.setVersion(v);
-        let d;
-        if (is_b === "") {
-            d = {"v": v}
-        } else {
-            d = {"v": v, "b": is_b}
 
         }
+
+        const nextVersion = versionList[currentIndex + 1]
+        store.setVersion(nextVersion)
+        const d  = is_b === '' ? {v: nextVersion} : {v: nextVersion, b: is_b}
+
         getMcData(d)
         loading.value = false
     }, 1000)

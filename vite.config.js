@@ -17,7 +17,7 @@ export default defineConfig({
         }),
         viteCompression(),
         Sitemap({
-            hostname: 'https://127.0.0.1/',  //你的域名
+            hostname: 'https://a.endyun.ltd/',  //你的域名
             robots: [{
                 userAgent: '*',
                 allow: '/',
